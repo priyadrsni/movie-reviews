@@ -1,0 +1,21 @@
+.card-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .card {
+        width: calc((100% / 3) - 30px);
+        // border: 1px solid $color-grey-100;
+        background-color: $brand-light-bg;
+    }
+}
+
+
+@include below-tablet {
+.card-wrap {
+    .card {
+        width: 100%;
+        margin: 0 0 20px 20px;
+    }
+}
+}

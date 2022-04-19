@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Get Movie reviews</title>
+    <link rel="stylesheet" href="./scss/style.css" />
+    <script src="./js/index.js" type="module"></script>
+  </head>
+  <body>
+    <section class="hero">
+      <picture
+        ><img src="./public/images/movie-review.png" alt="Book store"
+      /></picture>
+      <article>
+        <h1 class="title-2xl">NYT movie reviews</h1>
+        <form>
+          <div class="dropdown-wrap" id="searchByKeywordOrCritic">
+            <div class="dropdown">Choose keyword or critic</div>
+            <ul class="dropdown-menu hide">
+              <li>Keyword</li>
+              <li>Critic</li>
+            </ul>
+          </div>
+
+          <!-- Search by critic type or reviewer name -->
+          <div class="dropdown-wrap hide" id="searchByTypeOrReviewer">
+            <div class="dropdown">Choose type or reviewer</div>
+            <ul class="dropdown-menu hide">
+              <li>Type</li>
+              <li>Reviewer</li>
+            </ul>
+          </div>
+
+          <!-- Search by critic type -->
+          <div class="dropdown-wrap hide" id="searchByType">
+            <div class="dropdown">Choose all or picks</div>
+            <ul class="dropdown-menu hide">
+              <li>all</li>
+              <li>picks</li>
+            </ul>
+            <button class="btn btn-primary resetBtn">Reset</button>
+          <button type="submit" class="btn btn-secondary submitBtn">Search</button>
+          </div>
+
+          <!-- Search critic pick reviews by reviewer name -->
+          <div id="searchByReviewer" class="hide">
+            <div class="dropdown-wrap ip-dropdown-wrap" id="ipDropDown">
+              <input type="text" class="ip-dropdown" value="" placeholder="Type a reviewer name" />
+              <ul class="dropdown-menu hide"></ul>
+            </div>
+            <button class="btn btn-primary resetBtn">Reset</button>
+          <button type="submit" class="btn btn-secondary">Search</button>
+          </div>
+
+          <!-- Search by keyword and opening date -->
+          <div id="searchByKeywordAndDate" class="hide">
+            <div class="dropdown-wrap ip-dropdown-wrap" id="ipDropDown">
+              <input
+                type="text"
+                class="ip-dropdown"
+                value=""
+                placeholder="Search by keyword"
+              />
+              <ul class="dropdown-menu hide"></ul>
+            </div>
+            <input type="date" />
+            <button class="btn btn-primary resetBtn">Reset</button>
+          <button type="submit" class="btn btn-secondary submitBtn">Search</button>
+          </div>
+        </form>
+      </article>
+    </section>
+    <section class="movies genres">
+      <div class="genre">
+        <ul class="movie-list card-wrap"></ul>
+        <div class="modal hide">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button class="btn closeBtn">X</button>
+            </div>
+            <div class="modal-body">
+              
+            </div>
+            <div class="modal-footer"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

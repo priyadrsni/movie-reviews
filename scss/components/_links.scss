@@ -1,0 +1,21 @@
+.link {
+    text-decoration: none;
+    color: $brand-primary-text;
+
+    &-primary {
+        color: $brand-primary-text;
+    }
+    &-tertiary {
+        color: $brand-tertiary-text;
+    }
+    &-dark {
+        color: $brand-dark-text;
+    }
+    &-light {
+        color: $brand-light-text;
+    }
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

@@ -1,0 +1,117 @@
+/* montserrat-regular - latin */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../../public/fonts/montserrat-v21-latin-regular.woff2');
+  }
+  /* montserrat-500 - latin */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../../public/fonts/montserrat-v23-latin-500.woff2');
+}
+  /* montserrat-600 - latin */
+  @font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    src: url('../../public/fonts/montserrat-v21-latin-600.woff2');
+  }
+  /* montserrat-700 - latin */
+  @font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../../public/fonts/montserrat-v21-latin-700.woff2');
+  }
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #191919;
+}
+
+.title {
+  &-2xl {
+    font-size: 52px;
+    line-height: 48px;
+  }
+  &-xl {
+    font-size: 32px;
+    line-height: 38px;
+  }
+  &-lg {
+    font-size: 28px;
+    line-height: 34px;
+  }
+  &-md {
+    font-size: 18px;
+    line-height: 26px;
+  }
+  // &-sm {
+  //   font-size: 16px;
+  //   line-height: 20px;
+  // }
+  &-xs {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+.text {
+  &-lg {
+    font-size: 28px;
+    line-height: 34px;
+  }
+  &-md {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  &-sm {
+    font-size: 16px;
+    line-height: 22px;
+  }
+  &-xs {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  &-xxs {
+    font-size: 10px;
+    line-height: 14px;
+  }
+}
+
+p.text {
+  font-weight: 500;
+}
+
+.primary-color {
+    color: $brand-primary-bg;
+}
+
+
+@include below-desktop {
+  .title {
+    &-xl {
+      font-size: 30px;
+      line-height: 36px;
+    }
+    &-lg {
+      font-size: 24px;
+      line-height: 32px;
+    }
+    &-md {
+      font-size: 16px;
+      line-height: 24px;
+    }
+    // &-sm {
+    //   font-size: 16px;
+    //   line-height: 20px;
+    // }
+    &-xs {
+      font-size: 12px;
+      line-height: 18px;
+    }
+  }
+}

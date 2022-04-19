@@ -1,0 +1,20 @@
+.label {
+    display: inline-block;
+    padding: 4px 20px;
+    border-radius: 12px;
+    letter-spacing: 0.5px;
+
+    &-primary {
+        background-color: $brand-primary-bg;
+        color: $color-white;
+    }
+    &-dark {
+        background-color: $brand-secondary-bg;
+        color: $color-white;
+    }
+    &-light {
+        background-color: $brand-light-bg;
+        color: $brand-tertiary-text;
+        border: 1px solid $color-grey-100;
+    }
+}

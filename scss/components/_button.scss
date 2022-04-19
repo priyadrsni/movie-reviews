@@ -1,0 +1,64 @@
+.btn {
+    display: inline-block;
+    padding: 10px 25px;
+    min-width: 150px;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+
+    &-small {
+        padding: 5px 15px;
+        min-width: 100px;
+    }
+
+    &-primary {
+        color: $brand-tertiary-text;
+        border: 1px solid $color-grey-200;
+        transition: all 0.3s ease-in;
+
+        &:hover {
+            color: $brand-light-text;
+            background-color: $brand-primary-bg;
+            border-color: $brand-primary-bg; 
+        }
+    }
+
+    &-secondary {
+        color: $color-white;
+        background-color: $brand-primary-bg;
+        border: 1px solid $brand-primary-bg;
+        transition: all 0.3s ease-in;
+
+        &:hover {
+           background-color: darken($brand-primary-bg, 5%);
+        }
+    }
+}
+
+button.btn {
+    cursor: pointer;
+}
+
+.btn,
+button.btn {
+    transition: all 0.2s ease-in-out;
+}
+
+.closeBtn {
+    border: none;
+    color: $brand-dark-text;
+    min-width: 50px;
+    padding: 15px;
+    background-color: $brand-light-bg;
+    border-radius: 50%;
+    @extend .text-lg;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-weight: bold;
+    transition: all .3s ease;
+
+    &:hover {
+        background-color: darken($brand-light-bg, 2%);
+    }
+}
