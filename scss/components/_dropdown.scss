@@ -25,6 +25,11 @@
         top: 47%;
         border-color: $brand-tertiary-bg;
       }
+
+      .category {
+        position: absolute;
+        left: 15px;
+      }
   
       &-menu {
         width: 100%;

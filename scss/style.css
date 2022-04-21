@@ -62,7 +62,7 @@ b {
   font-weight: 700;
 }
 
-.container, .hero article, .filter-wrap .filter, .genres .genre h2, .genres .genre .card-wrap {
+.container, .hero article, .filter-wrap .filter, .genres .genre, .genres .genre h2 {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
@@ -142,13 +142,13 @@ b {
 }
 
 @media (max-width: 1024px) {
-  .container, .hero article, .filter-wrap .filter, .genres .genre h2, .genres .genre .card-wrap {
+  .container, .hero article, .filter-wrap .filter, .genres .genre, .genres .genre h2 {
     max-width: 768px;
   }
 }
 
 @media (max-width: 768px) {
-  .container, .hero article, .filter-wrap .filter, .genres .genre h2, .genres .genre .card-wrap {
+  .container, .hero article, .filter-wrap .filter, .genres .genre, .genres .genre h2 {
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -226,7 +226,8 @@ body {
   line-height: 24px;
 }
 
-.text-sm, .dropdown-wrap .dropdown, .hero article form input, .hero article form .btn, .genres .genre .modal .book-details .descp, .genres .genre .modal .book-details .author, .genres .genre .modal .book-details .publisher, .genres .genre .modal .book-details .buy-links, .genres .genre .modal .book-details .buy-links a, .genres .genre .modal .reviews h4, .genres .genre .modal .reviews p {
+.text-sm, .dropdown-wrap .dropdown, .hero article form input[type="text"],
+.hero article form input[type="date"], .hero article form .btn, .genres .genre .modal .book-details .descp, .genres .genre .modal .book-details .author, .genres .genre .modal .book-details .publisher, .genres .genre .modal .book-details .buy-links, .genres .genre .modal .book-details .buy-links a, .genres .genre .modal .reviews h4, .genres .genre .modal .reviews p {
   font-size: 16px;
   line-height: 22px;
 }
@@ -307,7 +308,7 @@ p.text {
   background-color: #9dc344;
 }
 
-button.btn {
+.btn {
   cursor: pointer;
 }
 
@@ -390,13 +391,16 @@ button.btn {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  margin-right: -30px;
 }
 
 .card-wrap .card {
   width: calc((100% / 3) - 30px);
+  margin-right: 30px;
+  margin-bottom: 40px;
   background-color: #FFF;
 }
 
@@ -433,6 +437,11 @@ button.btn {
   right: 20px;
   top: 47%;
   border-color: #9D9EA2;
+}
+
+.dropdown-wrap .dropdown .category {
+  position: absolute;
+  left: 15px;
 }
 
 .dropdown-wrap .dropdown-menu {
@@ -482,7 +491,7 @@ button.btn {
 
 .modal-content {
   min-width: 300px;
-  min-height: 500px;
+  min-height: 300px;
   overflow: scroll;
   width: 60%;
   background-color: #FFF;
@@ -507,6 +516,7 @@ button.btn {
 
 .hero {
   min-height: 600px;
+  max-height: 700px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -525,9 +535,6 @@ button.btn {
 }
 
 .hero picture img {
-  position: absolute;
-  bottom: 0;
-  left: 0;
   width: 100%;
 }
 
@@ -546,8 +553,16 @@ button.btn {
 }
 
 .hero article form {
-  width: 350px;
+  min-width: 350px;
+  max-width: 450px;
+  min-height: 280px;
   margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .hero article form .dropdown-wrap {
@@ -567,7 +582,8 @@ button.btn {
   border-radius: 0;
 }
 
-.hero article form input {
+.hero article form input[type="text"],
+.hero article form input[type="date"] {
   display: inline-block;
   text-align: left;
   background-color: #fff;
@@ -580,18 +596,20 @@ button.btn {
   border-left: none;
   border-right: none;
   border-radius: 8px;
-  margin-bottom: 15px;
 }
 
-.hero article form input:focus {
+.hero article form input[type="text"]:focus,
+.hero article form input[type="date"]:focus {
   outline: none;
 }
 
-.hero article form input[type="text"] {
+.hero article form input[type="text"][type="text"],
+.hero article form input[type="date"][type="text"] {
   line-height: 24px;
 }
 
-.hero article form input[type="date"] {
+.hero article form input[type="text"][type="date"],
+.hero article form input[type="date"][type="date"] {
   cursor: pointer;
   margin-bottom: 30px;
 }
@@ -666,6 +684,10 @@ button.btn {
           flex-direction: column;
 }
 
+.genres .genre {
+  width: 100%;
+}
+
 .genres .genre .genre-heading {
   background-color: #F2F2F2;
   padding: 10px 0;
@@ -688,10 +710,6 @@ button.btn {
   margin-top: 20px;
 }
 
-.genres .genre .card-wrap .card {
-  margin-bottom: 20px;
-}
-
 .genres .genre .card-wrap .card:hover {
   cursor: pointer;
   -webkit-transform: scale(0.9);
@@ -705,8 +723,8 @@ button.btn {
 .genres .genre .modal-body picture {
   display: inline-block;
   margin-bottom: 20px;
-  width: 100%;
-  height: 300px;
+  width: 80%;
+  height: auto;
   border-radius: 4px;
   overflow: hidden;
 }
@@ -727,7 +745,6 @@ button.btn {
   max-height: 500px;
   height: 100%;
   padding: 20px;
-  margin-bottom: 20px;
   background-color: #FFF;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -735,16 +752,17 @@ button.btn {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  overflow: scroll;
+  overflow: hidden;
 }
 
 .genres .genre .modal .book-details .left {
-  width: 50%;
+  width: 40%;
 }
 
 .genres .genre .modal .book-details .right {
-  width: 45%;
+  width: 55%;
   padding-top: 40px;
+  overflow: scroll;
 }
 
 .genres .genre .modal .book-details h2 {

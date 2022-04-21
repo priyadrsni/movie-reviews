@@ -1,18 +1,32 @@
 import MovieReviews from "./MovieReviews.mjs";
 
 const movieReviews = new MovieReviews();
-const dropdowns = document.getElementsByClassName("dropdown");
-const dropdownMenus = document.getElementsByClassName("dropdown-menu");
 const movieList = document.querySelector(".movie-list");
-const modalBody = document.querySelector(".modal-body");
-const resetBtns = document.querySelectorAll(".resetBtn");
-const submitBtns = document.querySelectorAll(".submitBtn");
-const closeBtn = document.querySelector(".closeBtn");
+const dropdown = {
+  all: document.getElementsByClassName("dropdown"),
+  values: document.querySelectorAll(".dropdown .value"),
+  categories: document.querySelectorAll(".dropdown .category"),
+  menus: document.getElementsByClassName("dropdown-menu"),
+};
+const buttons = {
+  resetBtns: document.querySelectorAll(".resetBtn"),
+  submitBtns: document.querySelectorAll(".submitBtn"),
+  closeBtn: document.querySelector(".closeBtn"),
+};
 const modal = document.querySelector(".modal");
+const modalBody = document.querySelector(".modal-body");
+const searchComponents = {
+  searchByKeywordOrCritic: document.getElementById("searchByKeywordOrCritic"),
+  searchByTypeOrReviewer: document.getElementById("searchByTypeOrReviewer"),
+  searchByType: document.getElementById("searchByType"),
+  searchByReviewer: document.getElementById("searchByReviewer"),
+  searchByKeywordAndDate: document.getElementById("searchByKeywordAndDate"),
+};
 const filters = {
   reviewer: "",
   query: "",
-  date: "",
+  startDate: "",
+  endDate: "",
   type: "",
 };
 const isSearchBy = {
@@ -21,16 +35,9 @@ const isSearchBy = {
   type: false,
   reviewer: false,
 };
-const searchComponents = {
-  searchByKeywordOrCritic: document.getElementById("searchByKeywordOrCritic"),
-  searchByTypeOrReviewer: document.getElementById("searchByTypeOrReviewer"),
-  searchByType: document.getElementById("searchByType"),
-  searchByReviewer: document.getElementById("searchByReviewer"),
-  searchByKeywordAndDate: document.getElementById("searchByKeywordAndDate"),
-};
 const data = {
-  reviewsOriginal: [],
-  reviewsFiltered: [],
+  reviews: [],
+  previousCategory: "",
 };
 
 const toggleHideClass = (element) => {
@@ -51,6 +58,22 @@ const hideAllComponents = () => {
   );
 };
 
+const resetAllDropdownValues = () => {
+  dropdown.values.forEach((dropdownValue) => {
+    dropdownValue.innerText = dropdownValue.getAttribute("data-default");
+  });
+};
+
+const resetAllCategoryValues = () => {
+  [...dropdown.categories].forEach((dropdownCategory) => {
+    dropdownCategory.innerText = "Category:";
+  });
+};
+
+const resetAllFilterValues = () => {
+  Object.keys(filters).forEach((key) => (filters[key] = ""));
+};
+
 const showComponentsBasedOnSearchByOption = () => {
   hideAllComponents();
   if (isSearchBy.keyword === true) {
@@ -62,38 +85,56 @@ const showComponentsBasedOnSearchByOption = () => {
   } else if (isSearchBy.critic === true) {
     removeHideClass(searchComponents.searchByTypeOrReviewer);
   } else {
+    resetAllDropdownValues();
+    resetAllCategoryValues();
+    resetAllFilterValues();
     removeHideClass(searchComponents.searchByKeywordOrCritic);
   }
 };
 
-const getMovieList = () => {
-  if (filters.reviewer !== "") {
-    movieReviews.getCriticsByReviewer().then((res) => {
-      data.reviewsOriginal = [...res];
-      data.reviewsFiltered = [...res];
+const populateMovieData = (response) => {
+    movieList.innerHTML = "";
 
-      res.forEach((movie) => {
-        movieList.innerHTML += `<li class="card"><img src="${movie.multimedia.resource.src}"></li>`;
+    response.forEach((movie, index) => {
+    const image = movie.multimedia
+        ? movie.multimedia.src
+        : "./public/images/clapboard.png";
+    movieList.innerHTML += `<li class="card" data-key=${index}><img src="${image}"><p class="title">${movie.display_title}</p></li>`;
+    });
+}
+
+const getAndPopulateMovieListByFilter = () => {
+  if (filters.reviewer !== "") {
+    movieReviews.getCriticsByReviewer(filters.reviewer).then((res) => {
+      data.reviews = [...res];
+      movieList.innerHTML = "";
+
+      res.forEach((movie, index) => {
+        const image = movie.multimedia
+          ? movie.multimedia.resource.src
+          : "./public/images/person.png";
+        const title = movie.display_title
+          ? movie.display_title
+          : movie.display_name;
+        movieList.innerHTML += `<li class="card" data-key=${index}><img src="${image}"><p class="title">${title}</p></li>`;
       });
     });
   } else if (filters.type !== "") {
-    movieReviews.getCriticPicksReviewsByType().then((res) => {
-      data.reviewsOriginal = [...res];
-      data.reviewsFiltered = [...res];
-
-      res.forEach((movie) => {
-        movieList.innerHTML += `<li class="card"><h3>${movie.display_name}</h3></li>`;
-      });
+    movieReviews.getCriticPicksReviewsByType(filters.type).then((res) => {
+      data.reviews = [...res];
+      populateMovieData(res);
     });
   } else {
-    movieReviews.getReviewsByQueryAndOpeningDate().then((res) => {
-      data.reviewsOriginal = [...res];
-      data.reviewsFiltered = [...res];
-
-      res.forEach((movie, index) => {
-        movieList.innerHTML += `<li class="card" data-key=${index}><img src="${movie.multimedia.src}"><p class="title">${movie.display_title}</p></li>`;
+    movieReviews
+      .getReviewsByQueryAndOpeningDate(
+        filters.query,
+        filters.startDate,
+        filters.endDate
+      )
+      .then((res) => {
+        data.reviews = [...res];
+        populateMovieData(res);
       });
-    });
   }
 };
 
@@ -102,7 +143,9 @@ const resetSearchBy = () => {
 };
 
 const updateDropdownValue = (e, value) => {
-  e.target.parentElement.previousElementSibling.innerText = value;
+  e.target.parentElement.previousElementSibling.querySelector(
+    ".value"
+  ).innerText = value;
   if (value.toLowerCase() in isSearchBy) {
     resetSearchBy();
     isSearchBy[value.toLowerCase()] = true;
@@ -110,31 +153,86 @@ const updateDropdownValue = (e, value) => {
   }
 };
 
-const updateModalContent = (movie) => {
+const getFilterDataFromUser = (element) => {
+  const elementId = element.getAttribute("id");
+  const inputElements = {
+    textInputElement: document.querySelector(
+      `#${elementId} input[type="text"]`
+    ),
+    startDateInputElement: document.querySelector(
+      `#${elementId} input[name="start-date"]`
+    ),
+    endDateInputElement: document.querySelector(
+      `#${elementId} input[name="end-date"]`
+    ),
+    dropdownInputElement: document.querySelector(`#${elementId} .value`),
+  };
+
+  if (isSearchBy.keyword) {
+    filters.query = inputElements.textInputElement.value;
+    filters.startDate = inputElements.startDateInputElement.value;
+    filters.endDate = inputElements.endDateInputElement.value;
+  } else if (isSearchBy.type) {
+    filters.type = inputElements.dropdownInputElement.innerText;
+  } else if (isSearchBy.reviewer) {
+    filters.reviewer = inputElements.textInputElement.value;
+  }
+};
+
+const updateModalContent = (data) => {
+  const {
+    display_title,
+    multimedia,
+    byline,
+    summary_short,
+    link,
+    opening_date,
+  } = data;
+  const title = display_title ? display_title : data.display_name;
+  const image = multimedia
+    ? multimedia.src
+      ? multimedia.src
+      : multimedia.resource.src
+    : "./public/images/clapboard.png";
+  const summary = summary_short ? summary_short : data.bio;
+
   const movieDetails = `
       <article class="book-details">
       <div class="left">
-      <h2>${movie.display_title}</h2>
-      <picture><img src="${movie.multimedia.src}" alt="Book cover"></picture>
+      <h2>${title}</h2>
+      <picture><img src="${image}" alt="Book cover"></picture>
       </div>
       <div class="right">
-      <p class="author"><span>Byline</span>${movie.byline}</p>
-      <p class="descp"><span>Summary:</span>${movie.summary_short}</p>
-      <p class="buy-links"><span>Review:</span><a href="${movie.link.url}" target="_blank" rel="noreferrer">${movie.link.suggested_link_text}</a>
-      </p>
-      <p class="date"><span><b>Opening date: </b> ${movie.opening_date}</span></p></div></article>`;
+      ${byline ? `<p class="author"><span>Byline</span>${byline}</p>` : ""}
+      <p class="descp"><span>Summary:</span>${summary}</p>
+      ${
+        link
+          ? `<p class="buy-links"><span>Review:</span><a href="${link.url}" target="_blank" rel="noreferrer">${link.suggested_link_text}</a>
+      </p>`
+          : ""
+      }
+      ${
+        opening_date
+          ? `<p class="date"><span><b>Opening date: </b> ${opening_date}</span></p></div></article>`
+          : ""
+      }`;
   modalBody.innerHTML = movieDetails;
   toggleHideClass(modal);
 };
 
+const filterFormSubmit = (event) => {
+    getFilterDataFromUser(event.target.parentElement);
+    getAndPopulateMovieListByFilter();
+}
+
 const addEvents = () => {
-  [...dropdowns].forEach((dropdown) => {
+  [...dropdown.all].forEach((dropdown) => {
     dropdown.addEventListener("click", () =>
       toggleHideClass(dropdown.nextElementSibling)
     );
   });
 
-  [...dropdownMenus].forEach((dropdownMenu) => {
+  [...dropdown.menus].forEach((dropdownMenu) => {
     dropdownMenu.addEventListener("click", (e) => {
       const item = e.target.closest("li");
       updateDropdownValue(e, item.innerText);
@@ -145,12 +243,12 @@ const addEvents = () => {
   movieList.addEventListener("click", (e) => {
     if (e.target.tagName !== "UL") {
       const movie =
-        data.reviewsOriginal[e.target.closest("li").getAttribute("data-key")];
+        data.reviews[e.target.closest("li").getAttribute("data-key")];
       updateModalContent(movie);
     }
   });
 
-  resetBtns.forEach((resetBtn) => {
+  buttons.resetBtns.forEach((resetBtn) => {
     resetBtn.addEventListener("click", (e) => {
       e.preventDefault();
       resetSearchBy();
@@ -158,11 +256,27 @@ const addEvents = () => {
     });
   });
 
-  submitBtns.forEach((submitBtn) => {
-    submitBtn.addEventListener("click", (e) => {});
+  buttons.submitBtns.forEach((submitBtn) => {
+    submitBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      filterFormSubmit(e);
+    });
   });
 
-  closeBtn.addEventListener("click", (e) => toggleHideClass(modal));
+  buttons.closeBtn.addEventListener("click", (e) => toggleHideClass(modal));
+};
+
+const getMovieList = () => {
+  movieReviews.getReviewsByQueryAndOpeningDate().then((res) => {
+    data.reviews = [...res];
+
+    res.forEach((movie, index) => {
+      const image = movie.multimedia
+        ? movie.multimedia.src
+        : "./public/images/clapboard.png";
+      movieList.innerHTML += `<li class="card" data-key=${index}><img src="${image}"><p class="title">${movie.display_title}</p></li>`;
+    });
+  });
 };
 
 window.addEventListener("load", () => {
@@ -170,3 +284,18 @@ window.addEventListener("load", () => {
 });
 
 getMovieList();
+
+
+
+
+
+
+// const filterForm = document.querySelector("#filterForm");
+// const filterFormInputs = document.querySelectorAll("#filterForm input");
+//   [...filterFormInputs].forEach(input => {
+//       input.addEventListener('keydown', (e) => {
+//       if(e.keyCode === 13) {
+//           filterFormSubmit(e);
+//       }
+//     })
+//   })

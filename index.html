@@ -14,10 +14,12 @@
         ><img src="./public/images/movie-review.png" alt="Book store"
       /></picture>
       <article>
-        <h1 class="title-2xl">NYT movie reviews</h1>
-        <form>
+        <h1 class="title-2xl">NewYork Times movie reviews</h1>
+        <form id="filterForm">
           <div class="dropdown-wrap" id="searchByKeywordOrCritic">
-            <div class="dropdown">Choose keyword or critic</div>
+            <div class="dropdown">
+              <!-- <span class="category">Category: </span> -->
+              <span class="value" data-default="Choose keyword or critic">Choose keyword or critic</span></div>
             <ul class="dropdown-menu hide">
               <li>Keyword</li>
               <li>Critic</li>
@@ -26,7 +28,9 @@
 
           <!-- Search by critic type or reviewer name -->
           <div class="dropdown-wrap hide" id="searchByTypeOrReviewer">
-            <div class="dropdown">Choose type or reviewer</div>
+            <div class="dropdown">
+              <!-- <span class="category">Category: </span> -->
+              <span class="value" data-default="Choose type or reviewer">Choose type or reviewer</span></div>
             <ul class="dropdown-menu hide">
               <li>Type</li>
               <li>Reviewer</li>
@@ -34,24 +38,35 @@
           </div>
 
           <!-- Search by critic type -->
-          <div class="dropdown-wrap hide" id="searchByType">
-            <div class="dropdown">Choose all or picks</div>
-            <ul class="dropdown-menu hide">
-              <li>all</li>
-              <li>picks</li>
-            </ul>
+          <div id="searchByType" class="hide">
+            <div class="dropdown-wrap">
+              <div class="dropdown">
+                <!-- <span class="category">Category: </span> -->
+                <span class="value" data-default="Choose all or picks">Choose all or picks</span></div>
+              <ul class="dropdown-menu hide">
+                <li>all</li>
+                <li>picks</li>
+              </ul>
+            </div>
             <button class="btn btn-primary resetBtn">Reset</button>
-          <button type="submit" class="btn btn-secondary submitBtn">Search</button>
+            <input type="submit" class="btn btn-secondary submitBtn">
+              Search
+          </input>
           </div>
 
           <!-- Search critic pick reviews by reviewer name -->
           <div id="searchByReviewer" class="hide">
             <div class="dropdown-wrap ip-dropdown-wrap" id="ipDropDown">
-              <input type="text" class="ip-dropdown" value="" placeholder="Type a reviewer name" />
+              <input
+                type="text"
+                class="ip-dropdown"
+                value=""
+                placeholder="Type a reviewer name"
+              />
               <ul class="dropdown-menu hide"></ul>
             </div>
             <button class="btn btn-primary resetBtn">Reset</button>
-          <button type="submit" class="btn btn-secondary">Search</button>
+            <input type="submit" class="btn btn-secondary submitBtn">Search</input>
           </div>
 
           <!-- Search by keyword and opening date -->
@@ -65,23 +80,26 @@
               />
               <ul class="dropdown-menu hide"></ul>
             </div>
-            <input type="date" />
+            <input type="date" name="start-date" />
+            <input type="date" name="end-date"/>
             <button class="btn btn-primary resetBtn">Reset</button>
-          <button type="submit" class="btn btn-secondary submitBtn">Search</button>
+            <input type="submit" class="btn btn-secondary submitBtn" value="Search" />
           </div>
         </form>
       </article>
     </section>
     <section class="movies genres">
       <div class="genre">
-        <ul class="movie-list card-wrap"></ul>
+        <ul class="movie-list card-wrap">
+          <!-- Added from js dynamically -->
+        </ul>
         <div class="modal hide">
           <div class="modal-content">
             <div class="modal-header">
               <button class="btn closeBtn">X</button>
             </div>
             <div class="modal-body">
-              
+              <!-- Added from js dynamically -->
             </div>
             <div class="modal-footer"></div>
           </div>
