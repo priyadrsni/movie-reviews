@@ -7,23 +7,16 @@
   align-items: center;
   position: relative;
   overflow: hidden;
+  margin-bottom: 80px;
 
   picture {
-    // &:after {
-    //     content: "";
-    //     position: absolute;
-    //     top: 0;
-    //     left: 0;
-    //     right: 0;
-    //     bottom: 0;
-    //     background-color: rgba(0, 0, 0, 0.5);
-    // }
+    width: 100%;
     img {
         width: 100%;
     }
   }
 
-  article {
+  .filter-wrap {
     @extend .container;
     position: absolute;
     top: 50%;
@@ -32,78 +25,51 @@
     text-align: center;
 
     h1 {
+        @extend .title-2xl;
         margin-bottom: 60px;
         color: $color-white;
     }
-  
-    form {
-      min-width: 350px;
-      max-width: 450px;
-      min-height: 280px;
-      margin: 0 auto;
+
+    .filter {
       display: flex;
+      min-height: 250px;
+      justify-content: center;
       align-items: center;
-      .dropdown-wrap {
-        text-align: left;
-        display: inline-block;
-        width: 100%;
-        margin-bottom: 30px;
-  
-        .dropdown {
-          border-right: none;
-          border-radius: 0;
-          background-color: $brand-secondary-bg;
-        }
-      }
 
-      .ip-dropdown-wrap .dropdown{
-          border-radius: 0;
-      }
-  
-      input[type="text"],
-      input[type="date"] {
-        @extend .text-sm;
-        display: inline-block;
-        text-align: left;
-        background-color: #fff;
-        color: #9d9ea2;
-        padding: 10px 30px 10px 20px;
-        position: relative;
-        width: 100%;
-        font-weight: 500;
-        border: 1px solid #f2f2f2;
-        border-left: none;
-        border-right: none;
-      border-radius: 8px;
-        // border-bottom-left-radius: 8px;
-  
-        &:focus {
-            outline: none;
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 350px;
+        margin-left: 80px;
+
+        label {
+          width: 100%;
         }
 
-        &[type="text"] {
-          line-height: 24px;
-        }
-
-        &[type="date"] {
-          cursor: pointer;
-          margin-bottom: 30px;
-        }
-      }
-  
-      .btn {
+        input[type="text"],
+        input[type="date"] {
+          width: 100%;
+          padding: 15px 20px;
           @extend .text-sm;
-          line-height: 24px;
-          display: inline-block;
-          // border-top-right-radius: 8px;
-          // border-bottom-right-radius: 8px;
-      }
+          border-radius: 8px;
+          border: 0;
+          margin-bottom: 15px;
 
-      .btn-primary {
-        margin-right: 20px;
+          &:focus {
+            outline: none;
+          }
+        }
+        .submit-btns {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .dropdown-wrap {
+          margin-bottom: 15px;
+        }
       }
     }
   }
-
-  
 }

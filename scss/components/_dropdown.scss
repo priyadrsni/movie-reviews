@@ -1,6 +1,7 @@
 .dropdown-wrap {
     text-align: right;
     position: relative;
+    cursor: pointer;
   
     .dropdown {
       display: inline-block;
@@ -15,7 +16,6 @@
       @extend .text-sm;
       font-weight: 500;
       border: 1px solid $color-grey-100;
-      cursor: pointer;
   
       &::after {
         content: "";
@@ -24,11 +24,6 @@
         right: 20px;
         top: 47%;
         border-color: $brand-tertiary-bg;
-      }
-
-      .category {
-        position: absolute;
-        left: 15px;
       }
   
       &-menu {

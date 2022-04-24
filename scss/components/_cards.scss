@@ -1,15 +1,24 @@
 .card-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    margin-right: -30px;
+    @extend .container;
+
+    .cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin-right: -30px;
+    }
 
     .card {
         width: calc((100% / 3) - 30px);
         margin-right: 30px;
         margin-bottom: 40px;
-        // border: 1px solid $color-grey-100;
         background-color: $brand-light-bg;
+        transition: transform 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+            transform: scale(0.9);
+        }
     }
 }
 

@@ -62,7 +62,7 @@ b {
   font-weight: 700;
 }
 
-.container, .hero article, .filter-wrap .filter, .genres .genre, .genres .genre h2 {
+.container, .card-wrap, .hero .filter-wrap {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
@@ -142,13 +142,13 @@ b {
 }
 
 @media (max-width: 1024px) {
-  .container, .hero article, .filter-wrap .filter, .genres .genre, .genres .genre h2 {
+  .container, .card-wrap, .hero .filter-wrap {
     max-width: 768px;
   }
 }
 
 @media (max-width: 768px) {
-  .container, .hero article, .filter-wrap .filter, .genres .genre, .genres .genre h2 {
+  .container, .card-wrap, .hero .filter-wrap {
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -191,7 +191,7 @@ body {
   color: #191919;
 }
 
-.title-2xl {
+.title-2xl, .hero .filter-wrap h1 {
   font-size: 52px;
   line-height: 48px;
 }
@@ -216,23 +216,23 @@ body {
   line-height: 20px;
 }
 
-.text-lg, .closeBtn, .genres .genre h2, .genres .genre .no-books {
+.text-lg, .close-btn {
   font-size: 28px;
   line-height: 34px;
 }
 
-.text-md, .genres .genre .card-wrap .title, .genres .genre .modal .book-details h2, .genres .genre .modal .reviews h3, .genres .genre .modal .similar-cards-wrap h3 {
+.text-md, .movies .card p, .modal .book-details h2, .modal .reviews h3, .modal .similar-cards-wrap h3 {
   font-size: 18px;
   line-height: 24px;
 }
 
-.text-sm, .dropdown-wrap .dropdown, .hero article form input[type="text"],
-.hero article form input[type="date"], .hero article form .btn, .genres .genre .modal .book-details .descp, .genres .genre .modal .book-details .author, .genres .genre .modal .book-details .publisher, .genres .genre .modal .book-details .buy-links, .genres .genre .modal .book-details .buy-links a, .genres .genre .modal .reviews h4, .genres .genre .modal .reviews p {
+.text-sm, .dropdown-wrap .dropdown, .hero .filter-wrap .filter form input[type="text"],
+.hero .filter-wrap .filter form input[type="date"], .modal .book-details .descp, .modal .book-details .author, .modal .book-details .publisher, .modal .book-details .buy-links, .modal .book-details .buy-links a, .modal .reviews h4, .modal .reviews p {
   font-size: 16px;
   line-height: 22px;
 }
 
-.text-xs, .genres .genre .modal .book-details .date, .genres .genre .modal .reviews .link {
+.text-xs, .modal .book-details .date, .modal .reviews .link {
   font-size: 14px;
   line-height: 20px;
 }
@@ -276,6 +276,7 @@ p.text {
   font-size: 14px;
   line-height: 20px;
   text-align: center;
+  border-radius: 12px;
 }
 
 .btn-small {
@@ -318,7 +319,7 @@ button.btn {
   transition: all 0.2s ease-in-out;
 }
 
-.closeBtn {
+.close-btn {
   border: none;
   color: #0E0C09;
   min-width: 50px;
@@ -333,7 +334,7 @@ button.btn {
   transition: all .3s ease;
 }
 
-.closeBtn:hover {
+.close-btn:hover {
   background-color: #fafafa;
 }
 
@@ -385,7 +386,7 @@ button.btn {
   border: 1px solid #F2F2F2;
 }
 
-.card-wrap {
+.card-wrap .cards {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -402,6 +403,16 @@ button.btn {
   margin-right: 30px;
   margin-bottom: 40px;
   background-color: #FFF;
+  -webkit-transition: -webkit-transform 0.3s ease;
+  transition: -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+  cursor: pointer;
+}
+
+.card-wrap .card:hover {
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
 }
 
 @media (max-width: 768px) {
@@ -414,6 +425,7 @@ button.btn {
 .dropdown-wrap {
   text-align: right;
   position: relative;
+  cursor: pointer;
 }
 
 .dropdown-wrap .dropdown {
@@ -428,7 +440,6 @@ button.btn {
   position: relative;
   font-weight: 500;
   border: 1px solid #F2F2F2;
-  cursor: pointer;
 }
 
 .dropdown-wrap .dropdown::after {
@@ -437,11 +448,6 @@ button.btn {
   right: 20px;
   top: 47%;
   border-color: #9D9EA2;
-}
-
-.dropdown-wrap .dropdown .category {
-  position: absolute;
-  left: 15px;
 }
 
 .dropdown-wrap .dropdown-menu {
@@ -532,13 +538,18 @@ button.btn {
           align-items: center;
   position: relative;
   overflow: hidden;
+  margin-bottom: 80px;
+}
+
+.hero picture {
+  width: 100%;
 }
 
 .hero picture img {
   width: 100%;
 }
 
-.hero article {
+.hero .filter-wrap {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -547,134 +558,25 @@ button.btn {
   text-align: center;
 }
 
-.hero article h1 {
+.hero .filter-wrap h1 {
   margin-bottom: 60px;
   color: #FFF;
 }
 
-.hero article form {
-  min-width: 350px;
-  max-width: 450px;
-  min-height: 280px;
-  margin: 0 auto;
+.hero .filter-wrap .filter {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  min-height: 250px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
 
-.hero article form .dropdown-wrap {
-  text-align: left;
-  display: inline-block;
-  width: 100%;
-  margin-bottom: 30px;
-}
-
-.hero article form .dropdown-wrap .dropdown {
-  border-right: none;
-  border-radius: 0;
-  background-color: #F2F2F2;
-}
-
-.hero article form .ip-dropdown-wrap .dropdown {
-  border-radius: 0;
-}
-
-.hero article form input[type="text"],
-.hero article form input[type="date"] {
-  display: inline-block;
-  text-align: left;
-  background-color: #fff;
-  color: #9d9ea2;
-  padding: 10px 30px 10px 20px;
-  position: relative;
-  width: 100%;
-  font-weight: 500;
-  border: 1px solid #f2f2f2;
-  border-left: none;
-  border-right: none;
-  border-radius: 8px;
-}
-
-.hero article form input[type="text"]:focus,
-.hero article form input[type="date"]:focus {
-  outline: none;
-}
-
-.hero article form input[type="text"][type="text"],
-.hero article form input[type="date"][type="text"] {
-  line-height: 24px;
-}
-
-.hero article form input[type="text"][type="date"],
-.hero article form input[type="date"][type="date"] {
-  cursor: pointer;
-  margin-bottom: 30px;
-}
-
-.hero article form .btn {
-  line-height: 24px;
-  display: inline-block;
-}
-
-.hero article form .btn-primary {
-  margin-right: 20px;
-}
-
-.filter-wrap {
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-  background-color: #FFF;
-}
-
-.filter-wrap .filter {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
-.filter-wrap .filter form {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.filter-wrap .filter form input[type="date"] {
-  border: 1px solid #F2F2F2;
-  padding: 10px 15px;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-.filter-wrap .filter form input[type="date"]:focus {
-  outline: none;
-}
-
-.filter-wrap .filter .dropdown-wrap {
-  display: inline-block;
-  margin-right: 40px;
-  margin-left: 10px;
-}
-
-.filter-wrap .filter .dropdown-wrap .dropdown {
-  width: 400px;
-}
-
-.filter-wrap .filter .dropdown-wrap .dropdown-menu {
-  width: 400px;
-  white-space: nowrap;
-  max-height: 200px;
-  overflow: scroll;
-}
-
-.genres {
+.hero .filter-wrap .filter form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -682,66 +584,77 @@ button.btn {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  width: 350px;
+  margin-left: 80px;
 }
 
-.genres .genre {
+.hero .filter-wrap .filter form label {
   width: 100%;
 }
 
-.genres .genre .genre-heading {
-  background-color: #F2F2F2;
-  padding: 10px 0;
-  z-index: 100;
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-}
-
-.genres .genre .card-wrap {
-  margin-top: 40px;
-  margin-bottom: 80px;
-}
-
-.genres .genre .card-wrap img {
+.hero .filter-wrap .filter form input[type="text"],
+.hero .filter-wrap .filter form input[type="date"] {
   width: 100%;
+  padding: 15px 20px;
+  border-radius: 8px;
+  border: 0;
+  margin-bottom: 15px;
 }
 
-.genres .genre .card-wrap .title {
+.hero .filter-wrap .filter form input[type="text"]:focus,
+.hero .filter-wrap .filter form input[type="date"]:focus {
+  outline: none;
+}
+
+.hero .filter-wrap .filter form .submit-btns {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.hero .filter-wrap .filter form .dropdown-wrap {
+  margin-bottom: 15px;
+}
+
+.movies .card img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.movies .card p {
   font-weight: bold;
-  margin-top: 20px;
 }
 
-.genres .genre .card-wrap .card:hover {
-  cursor: pointer;
-  -webkit-transform: scale(0.9);
-          transform: scale(0.9);
-  -webkit-transition: -webkit-transform 0.3s ease;
-  transition: -webkit-transform 0.3s ease;
-  transition: transform 0.3s ease;
-  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
-}
-
-.genres .genre .modal-body picture {
+.modal-body picture {
   display: inline-block;
   margin-bottom: 20px;
-  width: 80%;
+  width: 100%;
   height: auto;
   border-radius: 4px;
   overflow: hidden;
 }
 
-.genres .genre .modal-body img {
+.modal-body img {
   width: 100%;
 }
 
-.genres .genre .modal .left {
+.modal .left {
   width: 58%;
 }
 
-.genres .genre .modal .right {
+.modal .right {
   width: 40%;
 }
 
-.genres .genre .modal .book-details {
+.modal .book-details {
   max-height: 500px;
   height: 100%;
   padding: 20px;
@@ -755,81 +668,81 @@ button.btn {
   overflow: hidden;
 }
 
-.genres .genre .modal .book-details .left {
-  width: 40%;
+.modal .book-details .left {
+  width: 55%;
 }
 
-.genres .genre .modal .book-details .right {
-  width: 55%;
+.modal .book-details .right {
+  width: 40%;
   padding-top: 40px;
   overflow: scroll;
 }
 
-.genres .genre .modal .book-details h2 {
+.modal .book-details h2 {
   font-weight: bold;
   margin-bottom: 15px;
 }
 
-.genres .genre .modal .book-details .descp {
+.modal .book-details .descp {
   margin-bottom: 15px;
 }
 
-.genres .genre .modal .book-details .descp span {
+.modal .book-details .descp span {
   display: block;
   font-weight: normal;
   margin-bottom: 8px;
   color: #9D9EA2;
 }
 
-.genres .genre .modal .book-details .author {
+.modal .book-details .author {
   margin-bottom: 15px;
 }
 
-.genres .genre .modal .book-details .author span {
+.modal .book-details .author span {
   display: block;
   font-weight: normal;
   margin-bottom: 8px;
   color: #9D9EA2;
 }
 
-.genres .genre .modal .book-details .publisher {
+.modal .book-details .publisher {
   margin-bottom: 15px;
 }
 
-.genres .genre .modal .book-details .publisher span {
+.modal .book-details .publisher span {
   display: block;
   font-weight: normal;
   margin-bottom: 8px;
   color: #9D9EA2;
 }
 
-.genres .genre .modal .book-details .date {
+.modal .book-details .date {
   color: #9D9EA2;
 }
 
-.genres .genre .modal .book-details .date span {
+.modal .book-details .date span {
   margin-right: 10px;
 }
 
-.genres .genre .modal .book-details .buy-links {
+.modal .book-details .buy-links {
   margin-bottom: 20px;
 }
 
-.genres .genre .modal .book-details .buy-links span {
+.modal .book-details .buy-links span {
   display: block;
   font-weight: normal;
   margin-bottom: 8px;
   color: #9D9EA2;
 }
 
-.genres .genre .modal .book-details .buy-links a {
+.modal .book-details .buy-links a {
   font-weight: bold;
   color: #a7c957;
   margin: 0 10px 0 0;
   text-decoration: underline;
 }
 
-.genres .genre .modal .reviews {
+.modal .reviews {
   padding: 30px;
   background-color: #FFF;
   max-height: 200px;
@@ -837,28 +750,28 @@ button.btn {
   height: 100%;
 }
 
-.genres .genre .modal .reviews li {
+.modal .reviews li {
   margin-bottom: 20px;
 }
 
-.genres .genre .modal .reviews h3 {
+.modal .reviews h3 {
   margin-bottom: 20px;
 }
 
-.genres .genre .modal .reviews h4 {
+.modal .reviews h4 {
   margin-bottom: 8px;
   color: #9D9EA2;
 }
 
-.genres .genre .modal .reviews p {
+.modal .reviews p {
   margin-bottom: 8px;
 }
 
-.genres .genre .modal .reviews .link {
+.modal .reviews .link {
   text-decoration: underline;
 }
 
-.genres .genre .modal .similar-cards-wrap {
+.modal .similar-cards-wrap {
   overflow: scroll;
   padding: 20px;
   height: 100%;
@@ -867,25 +780,15 @@ button.btn {
   overflow: scroll;
 }
 
-.genres .genre .modal .similar-cards-wrap img {
+.modal .similar-cards-wrap img {
   width: 100%;
   height: auto;
 }
 
-.genres .genre .modal .similar-cards-wrap .card {
+.modal .similar-cards-wrap .card {
   width: 45%;
 }
 
-.genres .genre .modal .similar-cards-wrap .card:hover {
+.modal .similar-cards-wrap .card:hover {
   pointer-events: none;
-}
-
-.genres .genre .no-books {
-  text-align: center;
-  padding: 80px 0;
-  color: #9D9EA2;
-}
-
-.is-fixed ~ .genres {
-  margin-top: 138px;
 }

@@ -1,0 +1,170 @@
+.movies {
+    .card {
+        img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-weight: bold;
+            @extend .text-md;
+        }
+    }
+}
+
+.modal {
+    &-body {
+      picture {
+        display: inline-block;
+        margin-bottom: 20px;
+        width: 100%;
+        height: auto;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+      img {
+        width: 100%;
+      }
+    }
+
+    .left {
+      width: 58%;
+    }
+    .right {
+      width: 40%;
+    }
+
+    .book-details {
+      max-height: 500px;
+      height: 100%;
+      padding: 20px;
+      background-color: $brand-light-bg;
+      display: flex;
+      justify-content: space-between;
+      overflow: hidden;
+
+      .left {
+        width: 55%;
+      }
+      .right {
+        width: 40%;
+        padding-top: 40px;
+        overflow: scroll;
+      }
+      h2 {
+        @extend .text-md;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+      .descp {
+        @extend .text-sm;
+        margin-bottom: 15px;
+        span {
+          display: block;
+          font-weight: normal;
+          margin-bottom: 8px;
+          color: $brand-tertiary-text;
+        }
+      }
+
+      .author {
+        @extend .text-sm;
+        margin-bottom: 15px;
+        span {
+          display: block;
+          font-weight: normal;
+          margin-bottom: 8px;
+          color: $brand-tertiary-text;
+        }
+      }
+      .publisher {
+        @extend .text-sm;
+        margin-bottom: 15px;
+        span {
+          display: block;
+          font-weight: normal;
+          margin-bottom: 8px;
+          color: $brand-tertiary-text;
+        }
+      }
+
+      .date {
+        @extend .text-xs;
+        color: $color-grey-200;
+
+        span {
+          margin-right: 10px;
+        }
+      }
+      .buy-links {
+        @extend .text-sm;
+        margin-bottom: 20px;
+        span {
+          display: block;
+          font-weight: normal;
+          margin-bottom: 8px;
+          color: $brand-tertiary-text;
+        }
+        a {
+          @extend .text-sm;
+          font-weight: bold;
+          color: $brand-primary-text;
+          margin: 0 10px 0 0;
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .reviews {
+      padding: 30px;
+      background-color: $brand-light-bg;
+      max-height: 200px;
+      overflow: scroll;
+      height: 100%;
+
+      li {
+        margin-bottom: 20px;
+      }
+      h3 {
+        @extend .text-md;
+        margin-bottom: 20px;
+      }
+      h4 {
+        @extend .text-sm;
+        margin-bottom: 8px;
+        color: $brand-tertiary-text;
+      }
+      p {
+        margin-bottom: 8px;
+        @extend .text-sm;
+      }
+      .link {
+        @extend .text-xs;
+        text-decoration: underline;
+      }
+    }
+
+    .similar-cards-wrap {
+      overflow: scroll;
+      padding: 20px;
+      height: 100%;
+      background-color: $brand-light-bg;
+      max-height: 720px;
+      overflow: scroll;
+
+      h3 {
+        @extend .text-md;
+      }
+      img {
+        width: 100%;
+        height: auto;
+      }
+      .card {
+        width: 45%;
+        &:hover {
+          pointer-events: none;
+        }
+      }
+    }
+  }

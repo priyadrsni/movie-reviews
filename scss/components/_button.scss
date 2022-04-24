@@ -5,6 +5,7 @@
     font-size: 14px;
     line-height: 20px;
     text-align: center;
+    border-radius: 12px;
 
     &-small {
         padding: 5px 15px;
@@ -44,7 +45,7 @@ button.btn {
     transition: all 0.2s ease-in-out;
 }
 
-.closeBtn {
+.close-btn {
     border: none;
     color: $brand-dark-text;
     min-width: 50px;

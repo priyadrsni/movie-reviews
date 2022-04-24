@@ -4,105 +4,90 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Get Movie reviews</title>
+    <title>Get movie reviews</title>
     <link rel="stylesheet" href="./scss/style.css" />
     <script src="./js/index.js" type="module"></script>
   </head>
   <body>
     <section class="hero">
-      <picture
-        ><img src="./public/images/movie-review.png" alt="Book store"
-      /></picture>
-      <article>
-        <h1 class="title-2xl">NewYork Times movie reviews</h1>
-        <form id="filterForm">
-          <div class="dropdown-wrap" id="searchByKeywordOrCritic">
-            <div class="dropdown">
-              <!-- <span class="category">Category: </span> -->
-              <span class="value" data-default="Choose keyword or critic">Choose keyword or critic</span></div>
-            <ul class="dropdown-menu hide">
-              <li>Keyword</li>
-              <li>Critic</li>
-            </ul>
-          </div>
-
-          <!-- Search by critic type or reviewer name -->
-          <div class="dropdown-wrap hide" id="searchByTypeOrReviewer">
-            <div class="dropdown">
-              <!-- <span class="category">Category: </span> -->
-              <span class="value" data-default="Choose type or reviewer">Choose type or reviewer</span></div>
-            <ul class="dropdown-menu hide">
-              <li>Type</li>
-              <li>Reviewer</li>
-            </ul>
-          </div>
-
-          <!-- Search by critic type -->
-          <div id="searchByType" class="hide">
+      <picture>
+        <img
+          src="./public/images/movie-review.png"
+          alt="Theatre with red seats"
+        />
+      </picture>
+      <article class="filter-wrap">
+        <h1>NewYork Times Movie reviews</h1>
+        <div class="filter">
+          <div class="left">
             <div class="dropdown-wrap">
-              <div class="dropdown">
-                <!-- <span class="category">Category: </span> -->
-                <span class="value" data-default="Choose all or picks">Choose all or picks</span></div>
+              <div class="dropdown">Keyword</div>
               <ul class="dropdown-menu hide">
-                <li>all</li>
-                <li>picks</li>
+                <li>Keyword</li>
+                <li>Critic</li>
               </ul>
             </div>
-            <button class="btn btn-primary resetBtn">Reset</button>
-            <input type="submit" class="btn btn-secondary submitBtn">
-              Search
-          </input>
           </div>
-
-          <!-- Search critic pick reviews by reviewer name -->
-          <div id="searchByReviewer" class="hide">
-            <div class="dropdown-wrap ip-dropdown-wrap" id="ipDropDown">
-              <input
-                type="text"
-                class="ip-dropdown"
-                value=""
-                placeholder="Type a reviewer name"
-              />
-              <ul class="dropdown-menu hide"></ul>
-            </div>
-            <button class="btn btn-primary resetBtn">Reset</button>
-            <input type="submit" class="btn btn-secondary submitBtn">Search</input>
+          <div class="right">
+            <form id="keywordForm">
+              <label for="query">
+                <input
+                  type="text"
+                  placeholder="Enter a keyword to search"
+                  id="query"
+                  name="query"
+                />
+              </label>
+              <label for="start-date">
+                <input type="date" id="startDate" name="start-date" />
+              </label>
+              <label for="end-date">
+                <input type="date" id="endDate" name="end-date" />
+              </label>
+              <div class="submit-btns">
+                <button type="submit" class="btn btn-primary">Reset</button>
+                <input type="submit" class="btn btn-secondary" />
+              </div>
+            </form>
+            <form id="criticForm" class="hide">
+              <div class="dropdown-wrap" id="filterByCritic">
+                <div class="dropdown">
+                  <!-- Populated from js dynamically -->
+                </div>
+                <ul class="dropdown-menu hide">
+                  <!-- Populated from js dynamically -->
+                </ul>
+              </div>
+              <label for="query" id="filterByCriticReview" class="hide">
+                <input
+                  type="text"
+                  placeholder="Enter Reviewer name"
+                  name="reviewer"
+                  id="reviewer"
+                />
+              </label>
+              <div class="submit-btns hide">
+                <button type="submit" class="btn btn-primary">Reset</button>
+                <input type="submit" class="btn btn-secondary submit-btn"/>
+              </div>
+            </form>
           </div>
-
-          <!-- Search by keyword and opening date -->
-          <div id="searchByKeywordAndDate" class="hide">
-            <div class="dropdown-wrap ip-dropdown-wrap" id="ipDropDown">
-              <input
-                type="text"
-                class="ip-dropdown"
-                value=""
-                placeholder="Search by keyword"
-              />
-              <ul class="dropdown-menu hide"></ul>
-            </div>
-            <input type="date" name="start-date" />
-            <input type="date" name="end-date"/>
-            <button class="btn btn-primary resetBtn">Reset</button>
-            <input type="submit" class="btn btn-secondary submitBtn" value="Search" />
-          </div>
-        </form>
+        </div>
       </article>
     </section>
-    <section class="movies genres">
-      <div class="genre">
-        <ul class="movie-list card-wrap">
-          <!-- Added from js dynamically -->
-        </ul>
-        <div class="modal hide">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button class="btn closeBtn">X</button>
-            </div>
-            <div class="modal-body">
-              <!-- Added from js dynamically -->
-            </div>
-            <div class="modal-footer"></div>
+    <section class="card-wrap">
+      <ul class="cards movies">
+        <!-- Populated from js dynamically -->
+      </ul>
+      <div class="modal hide">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="btn close-btn">X</button>
           </div>
+          <div class="modal-body">
+            <!-- Added from js dynamically -->
+          </div>
+          <div class="modal-footer"></div>
         </div>
       </div>
     </section>
