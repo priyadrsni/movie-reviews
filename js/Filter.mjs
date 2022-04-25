@@ -111,7 +111,6 @@ class Filter extends Cards {
 
   handleCriticFormSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.querySelector("#reviewer").value);
     if (e.target.querySelector("#reviewer").value !== "") {
       this.userData.reviewer = e.target.querySelector("#reviewer").value;
       this.removePreviousFilter();

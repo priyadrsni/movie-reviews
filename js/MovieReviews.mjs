@@ -17,7 +17,6 @@ class MovieReviews {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data); 
         return data.results
       });
   }
