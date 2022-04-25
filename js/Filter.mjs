@@ -4,9 +4,18 @@ import MovieReviews from "./MovieReviews.mjs";
 class Filter extends Cards {
   constructor() {
     super();
+    this.movieReviews = new MovieReviews();
     this.filterBy = {
       keyword: true,
       critic: false,
+    };
+
+    this.userData = {
+      keyword: null,
+      startDate: null,
+      endDate: null,
+      reviewer: null,
+      type: null,
     };
 
     this.filterCriticsBy = {
@@ -33,76 +42,113 @@ class Filter extends Cards {
       critic: document.getElementById("criticForm"),
     };
 
-    this.userData = {
-      keyword: null,
-      startDate: null,
-      endDate: null,
-      reviewer: null,
-      type: null,
-    };
     this.currentForm = "keyword";
+    this.currentFilter = [];
+    this.currentlyOpenedDropdown = null;
   }
 
-  getDataBasedOnFilter(filterOption) {
+  handleResponseData = (res) => {
+    if (res !== null) {
+      this.data.results = [...res];
+      this.populateDataInCards([...res]);
+    }
+    else {
+      this.data.results = null;
+      this.populateDataInCards(null);
+    }
+  }
+
+  getDataBasedOnFilter = (filterOption) => {
     if (filterOption === "reviewer") {
-      new MovieReviews()
+      this.toggleLoader();
+      this.movieReviews
         .getCriticsByReviewer(this.userData.reviewer)
         .then((res) => {
-          this.data.results = [...res];
+          this.handleResponseData(res);
+          this.toggleLoader();
         });
     } else if (filterOption === "type") {
-      new MovieReviews()
+      this.toggleLoader();
+      this.movieReviews
         .getCriticPicksReviewsByType(this.userData.type)
         .then((res) => {
-          this.data.results = [...res];
+          this.handleResponseData(res);
+          this.toggleLoader();
         });
     } else {
-      new MovieReviews()
+      this.toggleLoader();
+      this.movieReviews
         .getReviewsByQueryAndOpeningDate(
-          this.userData.reviewer,
+          this.userData.keyword,
           this.userData.startDate,
           this.userData.endDate
         )
         .then((res) => {
-          this.data.results = [...res];
+          this.toggleLoader();
+          this.handleResponseData(res);
         });
     }
-  }
+  };
 
-  handleKeywordFormSubmit(e) {
-      e.preventDefault();
-      this.userData.keyword = e.target.querySelector("#query").value;
-      this.userData.startDate = e.target.querySelector("#startDate").value;
-      this.userData.endDate = e.target.querySelector("#endDate").value;
-      this.getDataBasedOnFilter("keyword");
-      this.populateDataInCards(this.data.results);
-  }
+  removePreviousFilter = () => {
+    this.currentFilter.forEach((filter) => {
+      this.userData[filter] = null;
+    });
+    this.currentFilter = [];
+  };
 
-  handleCriticFormSubmit(e) {
+  handleKeywordFormSubmit = (e) => {
+    e.preventDefault();
+    this.removePreviousFilter();
+    this.userData.keyword = e.target.querySelector("#query").value;
+    this.userData.startDate = e.target.querySelector("#startDate").value;
+    this.userData.endDate = e.target.querySelector("#endDate").value;
+    this.currentFilter.push("keyword");
+    this.currentFilter.push("startDate");
+    this.currentFilter.push("endDate");
+    this.getDataBasedOnFilter("keyword");
+  };
+
+  handleCriticFormSubmit = (e) => {
     e.preventDefault();
     console.log(e.target.querySelector("#reviewer").value);
-    if(e.target.querySelector("#reviewer").value !== "") {
-        this.userData.reviewer = e.target.querySelector("#reviewer").value;
-        this.getDataBasedOnFilter("reviewer");
-    }
-    else {
-        this.getDataBasedOnFilter("type");
+    if (e.target.querySelector("#reviewer").value !== "") {
+      this.userData.reviewer = e.target.querySelector("#reviewer").value;
+      this.removePreviousFilter();
+      this.currentFilter.push("reviewer");
+      this.getDataBasedOnFilter("reviewer");
+      this.getDataBasedOnFilter("reviewer");
+    } else {
+      this.getDataBasedOnFilter("type");
     }
     this.populateDataInCards(this.data.results);
-}
+  };
 
-  updateDropdown(e) {
+  handleFormReset = () => {
+    this.forms.keyword.reset();
+    this.forms.critic.reset();
+    this.removePreviousFilter();
+    this.getDataBasedOnFilter("keyword");
+  };
+
+  updateDropdown = (e) => {
     e.stopPropagation();
     const targetParent = e.currentTarget;
     const selectedOption = e.target.innerText;
+    this.currentlyOpenedDropdown = targetParent.querySelector(".dropdown-menu");
 
-    if (e.target.className === "dropdown" || e.target.tagName === "LI") {
+
+    if (e.target.className === "dropdown" || e.target === targetParent) {
       this.toggleClass(targetParent.querySelector(".dropdown-menu"), "hide");
     }
+    if(e.target.tagName === "LI") {
+      this.toggleClass(targetParent.querySelector(".dropdown-menu"), "hide");
+      this.showFormBasedOnUserOption(e);
+    }
     targetParent.querySelector(".dropdown").innerText = selectedOption;
-  }
+  };
 
-  showDropdown(value) {
+  showDropdown = (value) => {
     const dropdownMenu =
       this.filterByCriticDropdown.querySelector(".dropdown-menu");
 
@@ -113,35 +159,35 @@ class Filter extends Cards {
     this.data[value].forEach((item) => {
       dropdownMenu.appendChild(this.buildElement("li", {}, item));
     });
-  }
+  };
 
-  showKeywordForm() {
+  showKeywordForm = () => {
     this.filterBy.critic = false;
     this.filterBy.keyword = true;
     this.showForm("keyword");
-  }
+  };
 
-  showCriticForm(selectedOptionInLowerCase) {
+  showCriticForm = (selectedOptionInLowerCase) => {
     this.filterBy.critic = true;
     this.filterBy.keyword = false;
     this.showDropdown(selectedOptionInLowerCase);
     this.addClass(this.filterByCriticReview, "hide");
     this.addClass(this.forms.critic.querySelector(".submit-btns"), "hide");
     this.showForm("critic");
-  }
+  };
 
-  showReviewerForm() {
+  showReviewerForm = () => {
     this.removeClass(this.filterByCriticReview, "hide");
     this.removeClass(this.forms.critic.querySelector(".submit-btns"), "hide");
-  }
+  };
 
-  showTypeForm(selectedOptionInLowerCase) {
+  showTypeForm = (selectedOptionInLowerCase) => {
     this.addClass(this.filterByCriticReview, "hide");
     this.showDropdown(selectedOptionInLowerCase);
     this.removeClass(this.forms.critic.querySelector(".submit-btns"), "hide");
-  }
+  };
 
-  showFormBasedOnUserOption(e) {
+  showFormBasedOnUserOption = (e) => {
     e.stopPropagation();
     const selectedOption = e.target.innerText;
     const selectedOptionInLowerCase = selectedOption.toLowerCase();
@@ -152,16 +198,20 @@ class Filter extends Cards {
     else if (selectedOptionInLowerCase === "reviewer") this.showReviewerForm();
     else if (selectedOptionInLowerCase === "type")
       this.showTypeForm(selectedOptionInLowerCase);
-    else this.userData.type = selectedOptionInLowerCase;
-  }
+    else {
+      this.removePreviousFilter();
+      this.userData.type = selectedOptionInLowerCase;
+      this.currentFilter.push("type");
+    }
+  };
 
-  showForm(formName) {
+  showForm = (formName) => {
     if (this.currentForm !== formName) {
       this.toggleClass(this.forms.keyword, "hide");
       this.toggleClass(this.forms.critic, "hide");
       this.currentForm = formName;
     }
-  }
+  };
 }
 
 export default Filter;

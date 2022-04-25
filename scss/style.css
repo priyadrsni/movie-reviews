@@ -434,7 +434,7 @@ button.btn {
   text-align: left;
   background-color: #FFF;
   color: #9D9EA2;
-  padding: 10px 30px 10px 20px;
+  padding: 10px 60px 10px 20px;
   border-radius: 20px;
   min-width: 170px;
   position: relative;
@@ -665,7 +665,7 @@ button.btn {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .modal .book-details .left {
@@ -675,7 +675,6 @@ button.btn {
 .modal .book-details .right {
   width: 40%;
   padding-top: 40px;
-  overflow: scroll;
 }
 
 .modal .book-details h2 {

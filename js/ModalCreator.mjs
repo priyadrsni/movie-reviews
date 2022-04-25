@@ -9,7 +9,7 @@ class ModalCreator extends Utilities {
     this.closeBtn = document.querySelector(".close-btn");
   }
 
-  getBylineElement(byline) {
+  getBylineElement = (byline) => {
     const span = this.utilities.buildElement("span", { classes: [] }, "Byline");
     const p = this.utilities.buildElement("p", { classes: ["author"] });
     const text = document.createTextNode(byline);
@@ -19,7 +19,7 @@ class ModalCreator extends Utilities {
     return p;
   }
 
-  getSummaryElement(summary) {
+  getSummaryElement = (summary) => {
     const span = this.utilities.buildElement(
       "span",
       { classes: [] },
@@ -34,7 +34,7 @@ class ModalCreator extends Utilities {
     return p;
   }
 
-  getReviewLinkElement(link) {
+  getReviewLinkElement = (link) => {
     const span = this.utilities.buildElement(
       "span",
       { classes: [] },
@@ -56,7 +56,7 @@ class ModalCreator extends Utilities {
     return p;
   }
 
-  getOpeningDateElement(date) {
+  getOpeningDateElement = (date) => {
     const b = this.utilities.buildElement(
       "b",
       { classes: [] },
@@ -72,7 +72,7 @@ class ModalCreator extends Utilities {
     return p;
   }
 
-  getModalProfile(title, multimedia) {
+  getModalProfile = (title, multimedia) => {
     const div = this.utilities.buildElement("div", { classes: ["left"] });
     const h2 = this.utilities.buildElement("h2", { classes: [] }, title);
     const picture = this.utilities.buildElement("picture", { classes: [] });
@@ -85,7 +85,7 @@ class ModalCreator extends Utilities {
     return div;
   }
 
-  getModalDescription(byline, summary, link, opening_date) {
+  getModalDescription = (byline, summary, link, opening_date) => {
     const div = this.utilities.buildElement("div", { classes: ["right"] });
 
     if (byline) div.appendChild(this.getBylineElement(byline));
@@ -96,7 +96,13 @@ class ModalCreator extends Utilities {
     return div;
   }
 
-  createModal(data) {
+  updateModalContent = (modalData) => {
+    this.modalBody.innerHTML = "";
+    this.modalBody.appendChild(this.createModal(modalData));
+    this.utilities.toggleClass(this.modal, "hide");
+  };
+
+  createModal = (modalData) => {
     const {
       display_title,
       display_name,
@@ -106,7 +112,7 @@ class ModalCreator extends Utilities {
       bio,
       link,
       opening_date,
-    } = data;
+    } = modalData;
     const title = display_title ? display_title : display_name;
     const summary = summary_short ? summary_short : bio;
 
@@ -127,12 +133,6 @@ class ModalCreator extends Utilities {
 
     return modalBodyElement;
   }
-
-  updateModalContent = (data) => {
-    this.modalBody.innerHTML = "";
-    this.modalBody.appendChild(this.createModal(data));
-    this.utilities.toggleClass(this.modal, "hide");
-  };
 }
 
 export default ModalCreator;

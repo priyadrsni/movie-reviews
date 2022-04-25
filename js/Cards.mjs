@@ -4,9 +4,14 @@ class Cards extends Utilities{
   constructor() {
     super();
     this.cardsElement = document.querySelector(".cards");
+    this.loader = document.querySelector("#loader");
   }
 
-  getSingleCard(result, index) {
+  toggleLoader = () => {
+    this.loader.classList.toggle("hide");
+  }
+
+  getSingleCard = (result, index) => {
     const { display_title, display_name, multimedia } = result;
     const titleText = display_title ? display_title : display_name;
 
@@ -23,11 +28,16 @@ class Cards extends Utilities{
     return li;
   }
 
-  populateDataInCards(results) {
+  populateDataInCards = (results) => {
+    this.cardsElement.innerHTML = "";
     if (results !== null) {
       results.forEach((result, index) => {
         this.cardsElement.appendChild(this.getSingleCard(result, index));
       });
+    }
+    else {
+      const p = this.buildElement("p", {}, "No results");
+      this.cardsElement.appendChild(p);
     }
   }
 }

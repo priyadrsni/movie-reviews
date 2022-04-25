@@ -1,7 +1,7 @@
 class MovieReviews {
   #API_KEY = "fxoSB9iwMUkrdffhdEh84ZpJom09KYwI";
 
-  getCriticsByReviewer(reviewer = "all") {
+  getCriticsByReviewer = (reviewer = "all") => {
     return fetch(
       `https://api.nytimes.com/svc/movies/v2/critics/${reviewer}.json?api-key=${this.#API_KEY}`
     )
@@ -9,17 +9,20 @@ class MovieReviews {
       .then((data) => data.results);
   }
 
-  getReviewsByQueryAndOpeningDate(query = "", startDate, endDate) {
+  getReviewsByQueryAndOpeningDate = (query = "", startDate, endDate) => {
     const queryString = query ? `&query=${query}` : "";
     const dateString = (startDate && endDate) ? `&opening-date=${startDate}:${endDate}` : "";
     return fetch(
       `https://api.nytimes.com/svc/movies/v2/reviews/search.json?api-key=${this.#API_KEY}${queryString}${dateString}`
     )
       .then((res) => res.json())
-      .then((data) => data.results);
+      .then((data) => {
+        console.log(data); 
+        return data.results
+      });
   }
 
-  getCriticPicksReviewsByType(type, offset) {
+  getCriticPicksReviewsByType = (type, offset) => {
     const offsetString = offset ? `&offset=${offset}` : "";
     return fetch(
       `https://api.nytimes.com/svc/movies/v2/reviews/${type}.json?api-key=${this.#API_KEY}${offsetString}`

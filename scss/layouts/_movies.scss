@@ -42,7 +42,7 @@
       background-color: $brand-light-bg;
       display: flex;
       justify-content: space-between;
-      overflow: hidden;
+      overflow: scroll;
 
       .left {
         width: 55%;
@@ -50,7 +50,6 @@
       .right {
         width: 40%;
         padding-top: 40px;
-        overflow: scroll;
       }
       h2 {
         @extend .text-md;

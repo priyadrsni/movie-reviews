@@ -29,7 +29,7 @@
             </div>
           </div>
           <div class="right">
-            <form id="keywordForm">
+            <form id="keywordForm" method="POST">
               <label for="query">
                 <input
                   type="text"
@@ -45,11 +45,11 @@
                 <input type="date" id="endDate" name="end-date" />
               </label>
               <div class="submit-btns">
-                <button type="submit" class="btn btn-primary">Reset</button>
+                <button class="btn btn-primary reset-btn">Reset</button>
                 <input type="submit" class="btn btn-secondary" />
               </div>
             </form>
-            <form id="criticForm" class="hide">
+            <form id="criticForm" class="hide" method="POST">
               <div class="dropdown-wrap" id="filterByCritic">
                 <div class="dropdown">
                   <!-- Populated from js dynamically -->
@@ -67,7 +67,7 @@
                 />
               </label>
               <div class="submit-btns hide">
-                <button type="submit" class="btn btn-primary">Reset</button>
+                <button class="btn btn-primary reset-btn">Reset</button>
                 <input type="submit" class="btn btn-secondary submit-btn"/>
               </div>
             </form>
@@ -78,6 +78,9 @@
     <section class="card-wrap">
       <ul class="cards movies">
         <!-- Populated from js dynamically -->
+        <li id="loader" class="hide">
+          <h3>Loading....</h3>
+        </li>
       </ul>
       <div class="modal hide">
         <div class="modal-content">
